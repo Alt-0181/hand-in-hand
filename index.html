@@ -1,0 +1,1102 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>POP MART Personality</title>
+    <style>
+        @font-face {
+            font-family: 'DIN Pro';
+            src: url('fonts/dinpro.woff2') format('woff2'),
+                url('fonts/dinpro.ttf') format('truetype');
+            font-weight: 400;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'DB Helvethaica X Bd Cond';
+            src: url('fonts/dbhelvethaicaxbdcond.woff2') format('woff2'),
+                url('fonts/DB Helvethaica X Bd Cond v3.2.ttf') format('truetype');
+            font-weight: 400;
+            font-style: normal;
+        }
+
+        :root {
+            --primary-color: #E70022;
+            --secondary-color: #FEE101;
+            --background-color: #f9f9f9;
+            --text-color: #333;
+            --border-color: #ddd;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body {
+            height: 100%;
+            width: 100%;
+
+        }
+
+        body {
+            font-family: 'DIN Pro', 'DB Helvethaica X Bd Cond', Tahoma, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            padding: 0;
+        }
+
+        /* Logo at the top of each container */
+        .container-logo {
+            background-color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 8vh;
+            padding: 1vh 0;
+        }
+
+        .container-logo img {
+            height: 5vh;
+            max-width: 200px;
+            object-fit: contain;
+        }
+
+        /* Landing page styles */
+        .landing-page {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            background-color: #f9f9f9;
+        }
+
+        .landing-banner {
+            background-image: url('img/background.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            height: 70%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .landing-content {
+            background-color: #fff;
+            height: 30%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .landing-heading {
+            font-size: 8vw;
+            font-weight: 600;
+            margin-bottom: 3vh;
+            color: #333;
+        }
+
+        .start-button {
+            width: 80%;
+            background-color: #000;
+            color: #fff;
+            border: none;
+            border-radius: 1vh;
+            padding: 2vh 5vw;
+            font-size: 5vw;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .start-button:hover {
+            background-color: #333;
+        }
+
+        .intro {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            height: 100%;
+        }
+
+        .intro h2 {
+            font-size: 7vw;
+            margin-bottom: 1vh;
+        }
+
+        .intro p {
+            font-size: 5.5vw;
+        }
+
+        .test-container {
+            background-color: white;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+            padding: 2vh 4vw;
+        }
+
+        .progress-container {
+            margin-bottom: 3vh;
+        }
+
+        .progress-bar {
+            height: 1vh;
+            background-color: var(--border-color);
+            border-radius: 0.5vh;
+            overflow: hidden;
+            width: 100%;
+        }
+
+        .progress {
+            height: 100%;
+            background-color: var(--primary-color);
+            width: 5%;
+        }
+
+        #question-counter {
+            text-align: center;
+            font-size: 4.5vw;
+            margin-top: 0.5vh;
+            color: #666;
+        }
+
+        .questions-wrapper {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .question {
+            display: none;
+            height: 100%;
+            width: 100%;
+            flex-direction: column;
+        }
+
+        .question.active {
+            display: flex;
+        }
+
+        .image-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 40vh;
+            padding: 1vh 0;
+            text-align: center;
+        }
+
+        .question-image {
+            display: block;
+            max-width: 80vw;
+            max-height: 38vh;
+            object-fit: contain;
+            margin: 0 auto;
+        }
+
+        .question-text {
+            text-align: center;
+            font-size: 5.2vw;
+            padding: 0.5vh 0;
+            margin-bottom: 1.5vh;
+            font-weight: 500;
+            line-height: 1.1;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5vh;
+            margin-bottom: 2vh;
+            flex: 1;
+        }
+
+        .options label {
+            padding: 2vh 3vw;
+            border: 1px solid var(--border-color);
+            border-radius: 1vh;
+            text-align: center;
+            cursor: pointer;
+            font-size: 4.5vw;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 8vh;
+            transition: all 0.2s;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            hyphens: auto;
+            line-height: 1.2;
+        }
+
+        .options input[type="radio"] {
+            display: none;
+        }
+
+        .options input[type="radio"]:checked+label {
+            background-color: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .test-controls {
+            display: flex;
+            justify-content: space-between;
+            padding-top: 1vh;
+            margin-top: auto;
+        }
+
+        button {
+            padding: 1.5vh 5vw;
+            background-color: #000;
+            color: white;
+            border: none;
+            border-radius: 1vh;
+            font-size: 5vw;
+            cursor: pointer;
+            font-family: 'DIN Pro', 'DB Helvethaica X Bd Cond', Tahoma, Verdana, sans-serif;
+        }
+
+        button:disabled {
+            background-color: var(--border-color);
+            cursor: not-allowed;
+        }
+
+        #prev-btn {
+            background-color: #f0f0f0;
+            color: var(--text-color);
+        }
+
+        /* Results section */
+        .result-container {
+            display: none;
+            padding: 2vh 4vw;
+            height: 100%;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .result-container h2 {
+            text-align: center;
+            font-size: 6vw;
+            margin-bottom: 1vh;
+        }
+
+        .personality-type {
+            text-align: center;
+            font-size: 9vw;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 1vh;
+            display: none;
+        }
+
+        .personality-image {
+            display: block;
+            max-width: 60vw;
+            max-height: 30vh;
+            width: auto;
+            height: auto;
+            margin: 1vh auto;
+            border-radius: 2vw;
+            object-fit: contain;
+        }
+
+        #personality-title {
+            text-align: center;
+            font-size: 6vw;
+            margin-bottom: 1vh;
+        }
+
+        .type-description {
+            text-align: center;
+            font-size: 4.5vw;
+            line-height: 1.4;
+            margin-bottom: 2vh;
+            max-height: 25vh;
+            overflow-y: auto;
+        }
+
+        .result-container h3 {
+            font-size: 5.5vw;
+            margin: 1vh 0;
+            text-align: center;
+        }
+
+        .trait-container {
+            margin-bottom: 1vh;
+        }
+
+        .trait {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1vh;
+        }
+
+        .trait-label {
+            width: 20vw;
+            text-align: right;
+            padding-right: 2vw;
+            font-size: 4.5vw;
+        }
+
+        .trait-bar-container {
+            flex: 1;
+            height: 1.5vh;
+            background-color: var(--primary-color);
+            border-radius: 0.75vh;
+            overflow: hidden;
+        }
+
+        .trait-bar {
+            height: 100%;
+            background-color: var(--secondary-color);
+        }
+
+        #restart-btn {
+            display: block;
+            margin: 2vh auto;
+        }
+
+        /* Safe area adjustments for iPhone notch & bottom bar */
+        @supports (padding-top: env(safe-area-inset-top)) {
+            .container {
+                height: calc(100vh - env(safe-area-inset-top));
+                padding-bottom: env(safe-area-inset-bottom);
+            }
+
+            .test-controls {
+                padding-bottom: env(safe-area-inset-bottom);
+            }
+        }
+
+        /* Adjustments for different screen sizes */
+        @media (max-height: 700px) {
+            .image-container {
+                height: 35vh;
+            }
+
+            .question-image {
+                max-height: 33vh;
+            }
+
+            .options label {
+                font-size: 4.2vw;
+                min-height: 7.5vh;
+                padding: 1.8vh 3vw;
+            }
+
+            .question-text {
+                font-size: 5vw;
+            }
+        }
+
+        @media (min-height: 700px) {
+            .image-container {
+                height: 42vh;
+            }
+
+            .question-image {
+                max-height: 40vh;
+            }
+
+            .options label {
+                font-size: 4.5vw;
+                min-height: 8.5vh;
+            }
+
+            .question-text {
+                font-size: 5.2vw;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .container-logo img {
+                height: 7vh;
+                max-width: 300px;
+            }
+
+            .intro h2 {
+                font-size: 32px;
+            }
+
+            .intro p {
+                font-size: 22px;
+            }
+
+            .question-text {
+                font-size: 26px;
+            }
+
+            .options label {
+                font-size: 20px;
+                padding: 15px;
+            }
+
+            #question-counter {
+                font-size: 18px;
+            }
+
+            button {
+                font-size: 20px;
+                padding: 10px 20px;
+            }
+
+            .personality-type {
+                font-size: 38px;
+            }
+
+            #personality-title {
+                font-size: 26px;
+            }
+
+            .type-description {
+                font-size: 18px;
+            }
+
+            .trait-label {
+                font-size: 16px;
+                width: 80px;
+            }
+
+            .question-image {
+                max-width: 200px;
+            }
+
+            .personality-image {
+                max-width: 300px;
+                max-height: 300px;
+            }
+
+            .container {
+                max-width: 600px;
+                margin: 0 auto;
+            }
+
+            .landing-heading {
+                font-size: 64px;
+            }
+
+            .start-button {
+                font-size: 24px;
+                padding: 20px 5%;
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container" id="container">
+        <!-- Logo for landing page -->
+        <div class="container-logo">
+            <img src="img/logo.png" alt="POP MART">
+        </div>
+
+        <!-- New Landing Page -->
+        <div class="landing-page" id="landing-page">
+            <div class="landing-banner">
+                <!-- Image removed, just red background -->
+            </div>
+            <div class="landing-content">
+                <h2 class="landing-heading">คุณเป็นใครใน POP MART</h2>
+                <button class="start-button" id="start-button">เริ่มกันเลย!</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Original intro section (now hidden by default) -->
+    <div class="intro" id="intro-section" style="display: none;">
+        <h2>คุณเป็นใครในจักรวาล POP MART</h2>
+        <p>มาหาคำตอบไปพร้อมๆ กันได้เลย!</p>
+    </div>
+
+    <div class="test-container" id="test-section" style="display: none;">
+        <!-- Logo for test section -->
+        <div class="progress-container">
+            <div class="progress-bar">
+                <div class="progress" id="progress-bar"></div>
+            </div>
+            <p id="question-counter">คำถาม 1 จาก 20</p>
+        </div>
+
+        <div class="questions-wrapper">
+            <div id="questions-container"></div>
+        </div>
+
+        <div class="test-controls">
+            <button id="prev-btn">ย้อนกลับ</button>
+            <button id="next-btn" disabled>ถัดไป</button>
+        </div>
+    </div>
+
+    <div class="result-container" id="result-section">
+        <!-- Logo for results section -->
+        <h2>บุคลิกภาพของคุณคือ:</h2>
+        <div class="personality-type" id="personality-type">INTJ</div>
+        <img id="personality-image" class="personality-image" src="img/result/intj.jpg" alt="Personality Type Image">
+        <h3 id="personality-title">The Architect</h3>
+        <div class="type-description" id="type-description">
+            <!-- Description will be inserted here -->
+        </div>
+        <h3>ลักษณะของคุณ</h3>
+        <div class="trait-container">
+            <div class="trait">
+                <div class="trait-label">เก็บตัว</div>
+                <div class="trait-bar-container">
+                    <div class="trait-bar" id="i-bar" style="width: 70%"></div>
+                </div>
+                <div class="trait-label">เปิดเผย</div>
+            </div>
+            <div class="trait">
+                <div class="trait-label">จินตนาการ</div>
+                <div class="trait-bar-container">
+                    <div class="trait-bar" id="n-bar" style="width: 85%"></div>
+                </div>
+                <div class="trait-label">รูปธรรม</div>
+            </div>
+            <div class="trait">
+                <div class="trait-label">เหตุผล</div>
+                <div class="trait-bar-container">
+                    <div class="trait-bar" id="t-bar" style="width: 65%"></div>
+                </div>
+                <div class="trait-label">ความรู้สึก</div>
+            </div>
+            <div class="trait">
+                <div class="trait-label">มีแบบแผน</div>
+                <div class="trait-bar-container">
+                    <div class="trait-bar" id="j-bar" style="width: 55%"></div>
+                </div>
+                <div class="trait-label">ยืดหยุ่น</div>
+            </div>
+        </div>
+        <button id="restart-btn">ทำแบบทดสอบอีกครั้ง</button>
+    </div>
+</body>
+
+<script>
+    const landingPage = document.getElementById('landing-page');
+    const startButton = document.getElementById('start-button');
+    const header = document.getElementById('header');
+    const container = document.getElementById('container');
+
+    // Questions for the personality test - revised for teenage audience with consistent format
+    const questions = [
+        {
+            text: "ฉันชอบที่จะ",
+            options: [
+                "เรียนรู้และลองทำสิ่งใหม่ๆที่ท้าทาย",
+                "ทำสิ่งที่คุ้นเคยและถนัดอยู่แล้ว"
+            ],
+            imgSrc: "img/img (1).jpg"
+        },
+        {
+            text: "ฉันชอบที่จะ",
+            options: [
+                "อยู่คนเดียวเงียบๆในห้องส่วนตัว",
+                "ออกไปเจอเพื่อนๆและสังสรรค์"
+            ],
+            imgSrc: "img/img (2).jpg"
+        },
+        {
+            text: "ฉันชอบที่จะ",
+            options: [
+                "ให้คนอื่นใช้เหตุผลและความจริงในการคุยกับฉัน",
+                "ให้คนอื่นใส่ใจความรู้สึกของฉันเป็นหลัก"
+            ],
+            imgSrc: "img/img (3).jpg"
+        },
+        {
+            text: "ฉันชอบที่จะ",
+            options: [
+                "ทำงานหรือกิจกรรมให้เสร็จทีละอย่าง",
+                "ทำหลายๆอย่างพร้อมกันและสลับไปมา"
+            ],
+            imgSrc: "img/img (4).jpg"
+        },
+        {
+            text: "ฉันชอบที่จะ",
+            options: [
+                "ตัดสินใจโดยใช้ข้อมูลและความเป็นเหตุเป็นผล",
+                "ตัดสินใจโดยใช้ความรู้สึกและสัญชาตญาณ"
+            ],
+            imgSrc: "img/img (5).jpg"
+        },
+        {
+            text: "ฉันชอบที่จะ",
+            options: [
+                "เจาะลึกในเรื่องที่สนใจจริงๆเพียงไม่กี่เรื่อง",
+                "รู้เรื่องหลากหลายแต่ไม่ต้องลงลึกมาก"
+            ],
+            imgSrc: "img/img (6).jpg"
+        },
+        {
+            text: "ฉันชอบที่จะ",
+            options: [
+                "มีตารางกิจกรรมที่วางแผนไว้ชัดเจน",
+                "ปล่อยให้วันเป็นไปตามสถานการณ์โดยไม่ต้องวางแผนมาก"
+            ],
+            imgSrc: "img/img (7).jpg"
+        },
+        {
+            text: "ฉันชอบที่จะ",
+            options: [
+                "ทำงานหรือกิจกรรมที่เริ่มไว้จนเสร็จสมบูรณ์",
+                "เริ่มต้นไอเดียหรือโปรเจคใหม่ๆที่น่าสนใจ"
+            ],
+            imgSrc: "img/img (8).jpg"
+        },
+        {
+            text: "ฉันชอบที่จะ",
+            options: [
+                "ให้ทุกอย่างเป็นไปตามแผนที่วางไว้ไม่มีการเปลี่ยนแปลง",
+                "เปลี่ยนแปลงแผนตามสถานการณ์และโอกาส"
+            ],
+            imgSrc: "img/img (9).jpg"
+        },
+        {
+            text: "ฉันชอบที่จะ",
+            options: [
+                "ฟังคนอธิบายเรื่องราวเป็นภาพรวมและแนวคิดหลัก",
+                "ฟังคนอธิบายเรื่องราวอย่างละเอียดเป็นขั้นตอน"
+            ],
+            imgSrc: "img/img (10).jpg"
+        },
+        {
+            text: "ฉันชอบที่จะ",
+            options: [
+                "อยู่ในที่เงียบสงบไม่มีเสียงรบกวน",
+                "อยู่ในที่ที่มีเสียงพูดคุยหรือดนตรีเบาๆเป็นพื้นหลัง"
+            ],
+            imgSrc: "img/img (11).jpg"
+        },
+        {
+            text: "ฉันชอบที่จะ",
+            options: [
+                "วิเคราะห์ปัญหาและหาทางแก้ไข",
+                "ช่วยเหลือและเข้าใจความรู้สึกของเพื่อน"
+            ],
+            imgSrc: "img/img (12).jpg"
+        },
+        {
+            text: "ฉันชอบที่จะ",
+            options: [
+                "ฟังเรื่องราวเกี่ยวกับวิธีการและขั้นตอนที่ทำให้สิ่งนั้นสำเร็จ",
+                "ฟังเรื่องราวเกี่ยวกับแรงบันดาลใจและความคิดสร้างสรรค์"
+            ],
+            imgSrc: "img/img (13).jpg"
+        },
+        {
+            text: "ฉันชอบที่จะ",
+            options: [
+                "รับฟังข้อเสียของฉันอย่างตรงไปตรงมา",
+                "รับฟังข้อเสียของฉันแบบอ้อมๆ"
+            ],
+            imgSrc: "img/img (14).jpg"
+        },
+        {
+            text: "ฉันชอบที่จะ",
+            options: [
+                "ลงมือทำอะไรทันทีโดยไม่ต้องคิดนาน",
+                "วางแผนอย่างละเอียดก่อนลงมือทำ"
+            ],
+            imgSrc: "img/img (15).jpg"
+        },
+        {
+            text: "ฉันชอบที่จะ",
+            options: [
+                "จดจ่อกับสิ่งที่เกิดขึ้นในปัจจุบัน",
+                "คิดเกี่ยวกับอนาคตและความเป็นไปได้ต่างๆ"
+            ],
+            imgSrc: "img/img (1).jpg"
+        },
+        {
+            text: "ฉันชอบที่จะ",
+            options: [
+                "รับของขวัญแบบเซอร์ไพรส์ที่ไม่รู้มาก่อน",
+                "เลือกของขวัญที่ชอบด้วยตัวเอง"
+            ],
+            imgSrc: "img/img (2).jpg"
+        },
+        {
+            text: "ฉันชอบที่จะ",
+            options: [
+                "มีเวลาคิดให้นานๆก่อนจะต้องตัดสินใจอะไร",
+                "ตัดสินใจทันทีโดยใช้ข้อมูลที่มีอยู่"
+            ],
+            imgSrc: "img/img (3).jpg"
+        },
+        {
+            text: "ฉันชอบที่จะ",
+            options: [
+                "แสดงความคิดเห็นอย่างตรงไปตรงมาในกลุ่มเพื่อน",
+                "คิดทบทวนให้ดีก่อนแสดงความคิดเห็นในกลุ่ม"
+            ],
+            imgSrc: "img/img (4).jpg"
+        },
+        {
+            text: "ฉันชอบที่จะ",
+            options: [
+                "คุยกันตรงๆเพื่อแก้ไขปัญหาความขัดแย้ง",
+                "หลีกเลี่ยงความขัดแย้งเพื่อรักษาความสงบ"
+            ],
+            imgSrc: "img/img (5).jpg"
+        }
+    ];
+
+    // จัดกลุ่มคำอธิบายของแต่ละบุคลิกภาพ (ไม่แสดง code MBTI)
+    const personalityTypes = {
+        "ENFP": {
+            title: "LABUBU",
+            description: "ร่าเริง สนุกสนาน"
+        },
+        "ESFJ": {
+            title: "Sweet Bean",
+            description: "เป็นมิตร อ่อนโยน"
+        },
+        "ENTP": {
+            title: "SKULLPANDA",
+            description: "มีความคิดสร้างสรรค์ เป็นตัวของตัวเอง"
+        },
+        "ESFP": {
+            title: "MOLLY",
+            description: "สดใส อยากรู้อยากเห็น"
+        },
+        "ESTJ": {
+            title: "KUBO",
+            description: "กล้าหาญ มุ่งมั่น"
+        },
+        "ENFJ": {
+            title: "PUKCY",
+            description: "ช่วยเหลือ สร้างแรงบันดาลใจ"
+        },
+        "ENTJ": {
+            title: "HACIPUPU",  // Note: ENTJ appears to be missing description in the text
+            description: "ผู้นำ มีวิสัยทัศน์"
+        },
+        "ESTP": {
+            title: "HACIPUPU",
+            description: "ผจญภัย ชอบเรียนรู้"
+        },
+        "INFJ": {
+            title: "DIMOO",
+            description: "มีความฝัน ลองสิ่งใหม่ๆ"
+        },
+        "ISFJ": {
+            title: "CRYBABY",
+            description: "เข้าอกเข้าใจ อ่อนโยน"
+        },
+        "INFP": {
+            title: "POLAR",
+            description: "มองโลกในแง่ดี เป็นมิตร"
+        },
+        "ISFP": {
+            title: "MOLLY",
+            description: "อ่อนโยน มีน้ำใจ"
+        },
+        "INTJ": {
+            title: "SKULLPANDA",
+            description: "มีความคิดสร้างสรรค์ กล้าแสดงออก"
+        },
+        "ISTP": {
+            title: "HIRONO",
+            description: "ใจเย็น ช่างสังเกต"
+        },
+        "INTP": {
+            title: "Zsiga",
+            description: "ช่างสังเกต วิเคราะห์"
+        },
+        "ISTJ": {
+            title: "PINO JELLY",
+            description: "มีระเบียบ จัดการชีวิตได้ดี"
+        }
+    };
+
+    // For dimension scoring
+    // Question index -> dimension pair: ["e","i"], ["s","n"], ["t","f"], or ["j","p"]
+    // (This is simpler: pick left => +1 to left trait, pick right => +1 to right trait)
+    const questionMapping = {
+        0: ["n", "s"],    // Q0: N vs S
+        1: ["i", "e"],    // Q1: I vs E
+        2: ["t", "f"],    // Q2: T vs F
+        3: ["j", "p"],    // Q3: J vs P
+        4: ["t", "f"],    // Q4: T vs F
+        5: ["i", "e"],    // Q5: I vs E
+        6: ["j", "p"],    // Q6: J vs P
+        7: ["p", "j"],    // Q7: P vs J
+        8: ["j", "p"],    // Q8: J vs P
+        9: ["n", "s"],    // Q9: N vs S
+        10: ["i", "e"],   // Q10: I vs E
+        11: ["t", "f"],   // Q11: T vs F
+        12: ["s", "n"],   // Q12: S vs N
+        13: ["f", "t"],   // Q13: F vs T
+        14: ["e", "i"],   // Q14: E vs I
+        15: ["s", "n"],   // Q15: S vs N
+        16: ["s", "n"],   // Q16: S vs N
+        17: ["p", "j"],   // Q17: P vs J
+        18: ["e", "i"],   // Q18: E vs I
+        19: ["t", "f"]    // Q19: T vs F
+    };
+
+    // DOM references
+    const questionsContainer = document.getElementById('questions-container');
+    const progressBar = document.getElementById('progress-bar');
+    const questionCounter = document.getElementById('question-counter');
+    const prevBtn = document.getElementById('prev-btn');
+    const nextBtn = document.getElementById('next-btn');
+    const testSection = document.getElementById('test-section');
+    const resultSection = document.getElementById('result-section');
+    const personalityTypeElement = document.getElementById('personality-type');
+    const personalityTitleElement = document.getElementById('personality-title');
+    const typeDescriptionElement = document.getElementById('type-description');
+    const restartBtn = document.getElementById('restart-btn');
+    const iBar = document.getElementById('i-bar');
+    const nBar = document.getElementById('n-bar');
+    const tBar = document.getElementById('t-bar');
+    const jBar = document.getElementById('j-bar');
+
+    let currentQuestionIndex = 0;
+    // Array to store answers:  null (unanswered), 0 (left clicked), 1 (right clicked)
+    const answers = Array(questions.length).fill(null);
+
+    function initTest() {
+        questions.forEach((question, index) => {
+            const qDiv = document.createElement('div');
+            qDiv.className = 'question' + (index === 0 ? ' active' : '');
+            qDiv.dataset.index = index;
+
+            // Create image container
+            const imgContainer = document.createElement('div');
+            imgContainer.className = 'image-container';
+
+            // Insert the image
+            const questionImg = document.createElement('img');
+            questionImg.src = question.imgSrc;
+            questionImg.alt = `Question ${index + 1}`;
+            questionImg.className = 'question-image';
+
+            imgContainer.appendChild(questionImg);
+            qDiv.appendChild(imgContainer);
+
+            // Centered question text
+            const qText = document.createElement('div');
+            qText.className = 'question-text';
+            qText.textContent = question.text;
+            qDiv.appendChild(qText);
+
+            const optsDiv = document.createElement('div');
+            optsDiv.className = 'options';
+
+            question.options.forEach((optTxt, optIdx) => {
+                const inputId = `q${index}-opt${optIdx}`;
+                const radio = document.createElement('input');
+                radio.type = 'radio';
+                radio.id = inputId;
+                radio.name = `question-${index}`;
+                radio.value = optIdx;
+
+                if (answers[index] === optIdx) {
+                    radio.checked = true;
+                }
+
+                radio.addEventListener('change', () => {
+                    answers[index] = optIdx;
+                    updateNavButtons();
+                });
+
+                const label = document.createElement('label');
+                label.htmlFor = inputId;
+                label.textContent = optTxt;
+
+                optsDiv.appendChild(radio);
+                optsDiv.appendChild(label);
+            });
+
+            qDiv.appendChild(optsDiv);
+            questionsContainer.appendChild(qDiv);
+        });
+
+        updateNavButtons();
+        updateProgress();
+    }
+
+    function goToQuestion(index) {
+        document.querySelector('.question.active').classList.remove('active');
+        document.querySelector(`.question[data-index="${index}"]`).classList.add('active');
+        currentQuestionIndex = index;
+        updateNavButtons();
+        updateProgress();
+    }
+
+    function goToNextQuestion() {
+        if (currentQuestionIndex < questions.length - 1) {
+            goToQuestion(currentQuestionIndex + 1);
+        } else {
+            showResults();
+        }
+    }
+
+    function goToPrevQuestion() {
+        if (currentQuestionIndex > 0) {
+            goToQuestion(currentQuestionIndex - 1);
+        } else {
+            // If we're at the first question, go back to landing page
+            testSection.style.display = 'none';
+            landingPage.style.display = 'flex';
+        }
+    }
+
+    function updateNavButtons() {
+        // Remove the line that disables the prev button
+        // prevBtn.disabled = (currentQuestionIndex === 0);
+
+        if (currentQuestionIndex === questions.length - 1) {
+            nextBtn.textContent = 'ดูผลลัพธ์';
+        } else {
+            nextBtn.textContent = 'ถัดไป';
+        }
+
+        // Disable next if no answer for this question
+        nextBtn.disabled = (answers[currentQuestionIndex] === null);
+    }
+
+    const totalQuestions = questions.length;
+
+    function updateProgress() {
+        const progress = ((currentQuestionIndex + 1) / totalQuestions) * 100;
+        progressBar.style.width = `${progress}%`;
+        questionCounter.textContent = `คำถาม ${currentQuestionIndex + 1} จาก ${totalQuestions}`;
+    }
+
+    function calculateResults() {
+        // Initialize trait counters
+        const traits = {
+            e: 0, i: 0, // Extraversion vs Introversion
+            s: 0, n: 0, // Sensing vs Intuition
+            t: 0, f: 0, // Thinking vs Feeling
+            j: 0, p: 0  // Judging vs Perceiving
+        };
+
+        // Tally up the traits based on answers
+        answers.forEach((answer, index) => {
+            if (answer !== null) {
+                const dimension = questionMapping[index];
+                // If answer is 0 (left option), increment first trait
+                // If answer is 1 (right option), increment second trait
+                traits[dimension[answer]]++;
+            }
+        });
+
+        // Determine dominant trait in each dimension
+        let type = [
+            traits.e > traits.i ? 'E' : 'I',
+            traits.s > traits.n ? 'S' : 'N',
+            traits.t > traits.f ? 'T' : 'F',
+            traits.j > traits.p ? 'J' : 'P'
+        ].join('');
+
+        // Redirect ENTJ results to ENTP (new change)
+        if (type === "ENTJ") {
+            type = "ENTP";
+        }
+
+        // Redirect ENFP results to INFJ (existing redirect)
+        if (type === "ENFP") {
+            type = "INFJ";
+        }
+
+        // Calculate percentages for visualization
+        const iPercent = Math.round((traits.i / (traits.i + traits.e)) * 100);
+        const nPercent = Math.round((traits.n / (traits.n + traits.s)) * 100);
+        const tPercent = Math.round((traits.t / (traits.t + traits.f)) * 100);
+        const jPercent = Math.round((traits.j / (traits.j + traits.p)) * 100);
+
+        return {
+            type,
+            iPercent,
+            nPercent,
+            tPercent,
+            jPercent
+        };
+    }
+
+    function showResults() {
+        const results = calculateResults();
+        // Hide the personality type code as requested
+        personalityTypeElement.textContent = results.type;
+        personalityTypeElement.style.display = "none";
+
+        const typeData = personalityTypes[results.type] || {
+            title: "Unknown",
+            description: "No data found."
+        };
+
+        // Update the personality type image
+        const personalityImage = document.getElementById('personality-image');
+        personalityImage.src = `img/result/${results.type.toLowerCase()}.jpg`;
+        personalityImage.alt = `${typeData.title}`;
+
+        // Modify the image styling to show original dimensions
+        personalityImage.style.objectFit = "contain";
+        personalityImage.style.width = "auto";
+        personalityImage.style.height = "auto";
+        personalityImage.style.maxWidth = "100%";
+
+        personalityTitleElement.textContent = typeData.title;
+        typeDescriptionElement.textContent = typeData.description;
+
+        // Update trait bars
+        iBar.style.width = `${results.iPercent}%`;
+        nBar.style.width = `${results.nPercent}%`;
+        tBar.style.width = `${results.tPercent}%`;
+        jBar.style.width = `${results.jPercent}%`;
+
+        testSection.style.display = 'none';
+        resultSection.style.display = 'block';
+        // Keep header visible on results page
+    }
+
+    function restartTest() {
+        answers.fill(null);
+        const radioInputs = document.querySelectorAll('input[type="radio"]');
+        radioInputs.forEach(r => (r.checked = false));
+
+        // Return to landing page and header stays visible
+        landingPage.style.display = 'flex';
+
+        goToQuestion(0);
+        testSection.style.display = 'none';
+        resultSection.style.display = 'none';
+    }
+
+    // Landing page button listener
+    startButton.addEventListener('click', () => {
+        landingPage.style.display = 'none';
+        testSection.style.display = 'flex';
+    });
+
+    prevBtn.addEventListener('click', goToPrevQuestion);
+    nextBtn.addEventListener('click', goToNextQuestion);
+    restartBtn.addEventListener('click', restartTest);
+
+    initTest();
+</script>
