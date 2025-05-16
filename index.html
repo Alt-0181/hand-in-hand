@@ -25,7 +25,7 @@
         :root {
             --primary-color: #E70022;
             --secondary-color: #FEE101;
-            --background-color: #f9f9f9;
+            --background-color: #ffffff;
             --text-color: #333;
             --border-color: #ddd;
         }
@@ -40,31 +40,32 @@
         body {
             height: 100%;
             width: 100%;
-
+            overflow-x: hidden;
         }
 
         body {
             font-family: 'DIN Pro', 'DB Helvethaica X Bd Cond', Tahoma, Verdana, sans-serif;
             display: flex;
             flex-direction: column;
+            min-height: 100vh;
         }
 
         .container {
             flex: 1;
             display: flex;
             flex-direction: column;
-            height: 100vh;
+            min-height: 100vh;
             padding: 0;
         }
 
         /* Logo at the top of each container */
         .container-logo {
-            background-color: white;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 8vh;
             padding: 1vh 0;
+            margin-top: 3vh;
         }
 
         .container-logo img {
@@ -73,49 +74,50 @@
             object-fit: contain;
         }
 
-        /* Landing page styles */
+        /* Landing page styles - FIXED */
         .landing-page {
             display: flex;
             flex-direction: column;
-            height: 100%;
-            background-color: #f9f9f9;
+            min-height: 100vh;
         }
 
         .landing-banner {
-            background-image: url('img/background.jpg');
+            background-image: url('img/background.png');
             background-size: cover;
-            background-position: center;
+            background-position: bottom center;
             background-repeat: no-repeat;
-            height: 70%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            /* CHANGED: Use flex-grow to take available space */
+            flex-grow: 1;
+
+
+            overflow: hidden;
+            /* ADDED: Minimum height to ensure proper display */
+            min-height: calc(100vh);
         }
 
         .landing-content {
             background-color: #fff;
-            height: 30%;
+            height: 120px;
+            /* FIXED: Exact height for calculations */
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             text-align: center;
-        }
-
-        .landing-heading {
-            font-size: 8vw;
-            font-weight: 600;
-            margin-bottom: 3vh;
-            color: #333;
+            flex-shrink: 0;
+            /* Ensure this doesn't shrink */
+            margin: 0;
+            /* ADDED: Remove any margin */
+            /* ADDED: Padding for button spacing */
         }
 
         .start-button {
-            width: 80%;
+            width: 90%;
             background-color: #000;
             color: #fff;
             border: none;
             border-radius: 1vh;
-            padding: 2vh 5vw;
+            padding: 15px 5vw;
             font-size: 5vw;
             cursor: pointer;
             transition: background-color 0.3s;
@@ -130,7 +132,7 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
-            height: 100%;
+            min-height: 100vh;
         }
 
         .intro h2 {
@@ -142,18 +144,60 @@
             font-size: 5.5vw;
         }
 
+        /* Test container - CHANGED: Made scrollable */
         .test-container {
-            background-color: white;
+            background-color: #ffffff;
             display: flex;
             flex-direction: column;
-            height: 100%;
+            min-height: 100vh;
+            /* CHANGED: Use min-height for scrollability */
             overflow-y: auto;
-            -webkit-overflow-scrolling: touch;
-            padding: 2vh 4vw;
+            /* CHANGED: Allow vertical scrolling */
+            overflow-x: hidden;
+            /* Prevent horizontal scroll */
+            width: 100%;
         }
 
-        .progress-container {
-            margin-bottom: 3vh;
+        /* Background image container */
+        .background-container {
+            min-height: 70vh;
+            /* CHANGED: Use min-height for flexibility */
+            background-size: cover;
+            background-position: bottom center;
+            background-repeat: no-repeat;
+            transition: background-image 0.3s ease;
+            position: relative;
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Logo inside background container */
+        .background-container .container-logo {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 8vh;
+            padding: 1vh 0;
+            margin-top: 3vh;
+            position: relative;
+            z-index: 10;
+        }
+
+        .background-container .container-logo img {
+            height: 5vh;
+            max-width: 200px;
+            object-fit: contain;
+        }
+
+        /* Progress container inside background */
+        .background-container .progress-container {
+            background-color: transparent;
+            padding: 1.5vh 4vw 0 4vw;
+            /* REDUCED: Less padding for tighter spacing */
+            position: relative;
+            z-index: 10;
+            margin-bottom: 0;
         }
 
         .progress-bar {
@@ -177,75 +221,79 @@
             color: #666;
         }
 
+        /* Questions wrapper - REDUCED gap */
         .questions-wrapper {
             flex: 1;
-            position: relative;
-            overflow: hidden;
+            background-color: #ffffff;
             display: flex;
             flex-direction: column;
+            justify-content: flex-start;
+            /* CHANGED: Start from top to reduce gap */
+            padding: 0.5vh 4vw 2vh 4vw;
+            /* REDUCED: Less top padding */
+            min-height: auto;
         }
 
         .question {
             display: none;
-            height: 100%;
             width: 100%;
             flex-direction: column;
+            justify-content: center;
+            /* CHANGED: Center the content */
         }
 
         .question.active {
             display: flex;
         }
 
+        /* Remove the image-container since we're using background images */
         .image-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 40vh;
-            padding: 1vh 0;
-            text-align: center;
+            display: none;
         }
 
         .question-image {
-            display: block;
-            max-width: 80vw;
-            max-height: 38vh;
-            object-fit: contain;
-            margin: 0 auto;
+            display: none;
         }
 
         .question-text {
             text-align: center;
-            font-size: 5.2vw;
+            font-size: 9vw;
             padding: 0.5vh 0;
-            margin-bottom: 1.5vh;
             font-weight: 500;
             line-height: 1.1;
+            background-color: transparent;
+            color: black;
+            text-shadow: none;
+            margin-bottom: 1vh;
+            /* REDUCED: Less margin bottom for tighter spacing */
         }
 
         .options {
             display: flex;
             flex-direction: column;
-            gap: 1.5vh;
-            margin-bottom: 2vh;
-            flex: 1;
+            gap: 1vh;
+            margin-bottom: 1vh;
+            /* REDUCED: Less margin */
         }
 
         .options label {
-            padding: 2vh 3vw;
-            border: 1px solid var(--border-color);
+            padding: 1vh 2.5vw;
+            border: black solid 1px;
             border-radius: 1vh;
             text-align: center;
             cursor: pointer;
-            font-size: 4.5vw;
+            font-size: 4vw;
             display: flex;
             align-items: center;
             justify-content: center;
-            min-height: 8vh;
+            min-height: 6vh;
             transition: all 0.2s;
             word-wrap: break-word;
             overflow-wrap: break-word;
             hyphens: auto;
             line-height: 1.2;
+            background-color: rgba(255, 255, 255, 0.9);
+            color: black;
         }
 
         .options input[type="radio"] {
@@ -261,8 +309,20 @@
         .test-controls {
             display: flex;
             justify-content: space-between;
-            padding-top: 1vh;
-            margin-top: auto;
+            padding: 2vh 4vw 4vh 4vw;
+            /* CHANGED: Adjusted padding */
+            background-color: #ffffff;
+            flex-shrink: 0;
+            /* ADDED: Prevent shrinking */
+        }
+
+        .test-footer {
+            text-align: center;
+            padding: 0vh 4vw 2vh 4vw;
+            background-color: #ffffff;
+            font-size: 3vw;
+            color: #3d3d3d;
+            flex-shrink: 0;
         }
 
         button {
@@ -289,147 +349,142 @@
         /* Results section */
         .result-container {
             display: none;
-            padding: 2vh 4vw;
-            height: 100%;
-            overflow-y: auto;
-            -webkit-overflow-scrolling: touch;
-        }
-
-        .result-container h2 {
-            text-align: center;
-            font-size: 6vw;
-            margin-bottom: 1vh;
-        }
-
-        .personality-type {
-            text-align: center;
-            font-size: 9vw;
-            font-weight: 700;
-            color: var(--primary-color);
-            margin-bottom: 1vh;
-            display: none;
+            width: 100vw;
+            min-height: 100vh;
+            background-color: black;
+            overflow: visible;
         }
 
         .personality-image {
-            display: block;
-            max-width: 60vw;
-            max-height: 30vh;
-            width: auto;
-            height: auto;
-            margin: 1vh auto;
-            border-radius: 2vw;
-            object-fit: contain;
+            width: 100vw;
+            height: 100vh;
+            object-fit: cover;
+            object-position: center;
+            cursor: pointer;
         }
 
-        #personality-title {
-            text-align: center;
-            font-size: 6vw;
-            margin-bottom: 1vh;
-        }
-
-        .type-description {
-            text-align: center;
-            font-size: 4.5vw;
-            line-height: 1.4;
-            margin-bottom: 2vh;
-            max-height: 25vh;
-            overflow-y: auto;
-        }
-
-        .result-container h3 {
-            font-size: 5.5vw;
-            margin: 1vh 0;
-            text-align: center;
-        }
-
-        .trait-container {
-            margin-bottom: 1vh;
-        }
-
-        .trait {
-            display: flex;
-            align-items: center;
-            margin-bottom: 1vh;
-        }
-
-        .trait-label {
-            width: 20vw;
-            text-align: right;
-            padding-right: 2vw;
-            font-size: 4.5vw;
-        }
-
-        .trait-bar-container {
-            flex: 1;
-            height: 1.5vh;
-            background-color: var(--primary-color);
-            border-radius: 0.75vh;
-            overflow: hidden;
-        }
-
-        .trait-bar {
-            height: 100%;
-            background-color: var(--secondary-color);
-        }
-
+        /* Hide all other result elements */
+        .result-container h2,
+        .personality-type,
+        #personality-title,
+        .type-description,
         #restart-btn {
-            display: block;
-            margin: 2vh auto;
+            display: none;
         }
 
-        /* Safe area adjustments for iPhone notch & bottom bar */
-        @supports (padding-top: env(safe-area-inset-top)) {
-            .container {
-                height: calc(100vh - env(safe-area-inset-top));
-                padding-bottom: env(safe-area-inset-bottom);
+        /* Mobile/small screen adjustments */
+        @media (max-width: 767px) {
+            .landing-banner {
+                margin: 0;
+                /* REMOVED: No margins for full height */
+                border-radius: 0;
+                /* REMOVED: No border radius */
             }
 
             .test-controls {
-                padding-bottom: env(safe-area-inset-bottom);
+                padding: 1vh 4vw 1vh 4vw;
+            }
+
+            /* REMOVED: iOS Safari position fixed - now scrollable */
+        }
+
+        /* iPhone specific adjustments */
+        @media (max-width: 414px) and (max-height: 896px) {
+            .landing-banner {
+                min-height: calc(100vh);
+
+
+                background-position: center bottom;
             }
         }
 
-        /* Adjustments for different screen sizes */
+        /* Very small screens (iPhone SE, etc.) */
+        @media (max-width: 375px) and (max-height: 812px) {
+            .landing-banner {
+                min-height: calc(100vh);
+
+                border-radius: 3vh;
+            }
+        }
+
+        /* Height-based adjustments */
         @media (max-height: 700px) {
-            .image-container {
-                height: 35vh;
+            .background-container {
+                height: 45vh;
+                /* REDUCED: Smaller height for short screens */
             }
 
-            .question-image {
-                max-height: 33vh;
+            .questions-wrapper {
+                padding: 0.25vh 4vw 1vh 4vw;
+                /* REDUCED: Even less padding on short screens */
             }
 
             .options label {
-                font-size: 4.2vw;
-                min-height: 7.5vh;
-                padding: 1.8vh 3vw;
+                font-size: 3.8vw;
+                min-height: 5.5vh;
+                padding: 0.8vh 2vw;
             }
 
             .question-text {
-                font-size: 5vw;
+                font-size: 8vw;
+                margin-bottom: 0.75vh;
+                /* REDUCED: Less margin on short screens */
+            }
+
+            .options {
+                gap: 0.8vh;
+                margin-bottom: 1vh;
+            }
+
+            .test-controls {
+                padding: 1vh 4vw 2vh 4vw;
+            }
+
+            .test-footer {
+                padding: 0.5vh 4vw 1vh 4vw;
+                font-size: 3vw;
             }
         }
+
+
 
         @media (min-height: 700px) {
-            .image-container {
-                height: 42vh;
+            .background-container {
+                height: 50vh;
+                /* REDUCED: Consistent with main rule */
             }
 
-            .question-image {
-                max-height: 40vh;
+            .questions-wrapper {
+                padding: 0.5vh 4vw 2vh 4vw;
+                /* CONSISTENT: Same as main rule */
             }
 
             .options label {
-                font-size: 4.5vw;
-                min-height: 8.5vh;
+                font-size: 4vw;
+                min-height: 6vh;
             }
 
             .question-text {
-                font-size: 5.2vw;
+                font-size: 9vw;
+                margin-bottom: 1vh;
+                /* CONSISTENT: Less margin */
             }
         }
 
+        /* Desktop styles */
         @media (min-width: 768px) {
+            body {
+                align-items: center;
+                justify-content: center;
+                min-height: 100vh;
+            }
+
+            .container {
+                max-width: 600px;
+                width: 100%;
+                margin: 0 auto;
+            }
+
             .container-logo img {
                 height: 7vh;
                 max-width: 300px;
@@ -445,11 +500,13 @@
 
             .question-text {
                 font-size: 26px;
+                color: white;
             }
 
             .options label {
-                font-size: 20px;
-                padding: 15px;
+                font-size: 18px;
+                padding: 10px 15px;
+                min-height: auto;
             }
 
             #question-counter {
@@ -482,24 +539,143 @@
                 max-width: 200px;
             }
 
-            .personality-image {
-                max-width: 300px;
-                max-height: 300px;
+            /* Landing page desktop styling */
+            .landing-page {
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                width: 100%;
+                height: 100vh;
+                /* ADDED: Fixed height for desktop */
             }
 
-            .container {
-                max-width: 600px;
-                margin: 0 auto;
+            .landing-banner {
+                height: calc(100vh - 160px);
+                /* CHANGED: Account for desktop content height */
+                margin: 0;
+                /* REMOVED: No margins for full coverage */
+                border-radius: 0;
+                /* REMOVED: No border radius */
+                width: 100%;
+                /* CHANGED: Full width */
+                background-position: center;
+                /* ENSURE: Center position for desktop */
             }
 
-            .landing-heading {
-                font-size: 64px;
+            .landing-content {
+                height: 160px;
+                /* INCREASED: More height for desktop button */
+                padding: 40px;
+                width: 100%;
             }
 
             .start-button {
-                font-size: 24px;
-                padding: 20px 5%;
-                width: 90%;
+                font-size: 22px;
+                padding: 15px 30px;
+                width: 300px;
+                border-radius: 12px;
+                margin: 0 auto;
+            }
+
+            /* Desktop test section */
+            .test-container {
+                max-width: 600px;
+                margin: 0 auto;
+                width: 600px;
+                position: relative;
+                min-height: 100vh;
+                /* CHANGED: Use min-height for scrollability */
+                overflow-y: auto;
+                /* ADDED: Allow scrolling on desktop too */
+            }
+
+            .test-footer {
+                position: relative;
+                z-index: 5;
+                background-color: transparent;
+                color: #666;
+                font-size: 14px;
+                padding: 1vh 30px 4vh 30px;
+            }
+
+            .background-container {
+                min-height: 100vh;
+                width: 100%;
+            }
+
+            .questions-wrapper {
+                position: relative;
+                z-index: 5;
+                background-color: transparent;
+                min-height: auto;
+                flex: 1;
+            }
+
+            .test-controls {
+                position: relative;
+                z-index: 5;
+                background-color: transparent;
+                padding: 3vh 30px 8vh 30px;
+            }
+
+            .background-container .container-logo {
+                display: flex !important;
+                justify-content: center;
+                align-items: center;
+                height: 8vh;
+                padding: 1vh 0;
+                margin-bottom: 2vh;
+                position: relative;
+                z-index: 10;
+            }
+
+            .background-container .container-logo img {
+                height: 7vh;
+                max-width: 300px;
+                object-fit: contain;
+            }
+
+            .background-container .progress-container {
+                padding: 2vh 30px;
+                z-index: 10;
+                position: relative;
+            }
+
+            .image-container {
+                height: 300px;
+            }
+
+            .question-image {
+                max-height: 250px;
+                max-width: 400px;
+            }
+
+            .intro h2 {
+                font-size: 28px;
+            }
+
+            .intro p {
+                font-size: 20px;
+            }
+
+            .question-text {
+                font-size: 28px;
+                color: white;
+            }
+
+            .options label {
+                font-size: 18px;
+                padding: 15px;
+                background-color: rgba(255, 255, 255, 0.9);
+            }
+
+            #question-counter {
+                font-size: 16px;
+            }
+
+            button {
+                font-size: 18px;
+                padding: 12px 24px;
             }
         }
     </style>
@@ -507,18 +683,12 @@
 
 <body>
     <div class="container" id="container">
-        <!-- Logo for landing page -->
-        <div class="container-logo">
-            <img src="img/logo.png" alt="POP MART">
-        </div>
-
         <!-- New Landing Page -->
         <div class="landing-page" id="landing-page">
             <div class="landing-banner">
                 <!-- Image removed, just red background -->
             </div>
             <div class="landing-content">
-                <h2 class="landing-heading">คุณเป็นใครใน POP MART</h2>
                 <button class="start-button" id="start-button">เริ่มกันเลย!</button>
             </div>
         </div>
@@ -531,12 +701,21 @@
     </div>
 
     <div class="test-container" id="test-section" style="display: none;">
-        <!-- Logo for test section -->
-        <div class="progress-container">
-            <div class="progress-bar">
-                <div class="progress" id="progress-bar"></div>
+        <!-- Background image container - 65% of screen height -->
+        <!-- Contains logo, progress bar, and question counter -->
+        <div class="background-container" id="background-container">
+            <!-- Logo inside background container -->
+            <div class="container-logo">
+                <img src="img/logo.png" alt="POP MART">
             </div>
-            <p id="question-counter">คำถาม 1 จาก 20</p>
+
+            <!-- Progress container inside background -->
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress" id="progress-bar"></div>
+                </div>
+                <p id="question-counter">คำถาม 1 จาก 20</p>
+            </div>
         </div>
 
         <div class="questions-wrapper">
@@ -547,47 +726,19 @@
             <button id="prev-btn">ย้อนกลับ</button>
             <button id="next-btn" disabled>ถัดไป</button>
         </div>
+
+        <div class="test-footer">
+            © POP MART. All rights reserved
+        </div>
     </div>
 
     <div class="result-container" id="result-section">
-        <!-- Logo for results section -->
         <h2>บุคลิกภาพของคุณคือ:</h2>
         <div class="personality-type" id="personality-type">INTJ</div>
-        <img id="personality-image" class="personality-image" src="img/result/intj.jpg" alt="Personality Type Image">
+        <img id="personality-image" class="personality-image" src="img/result/intj.png" alt="Personality Type Image">
         <h3 id="personality-title">The Architect</h3>
         <div class="type-description" id="type-description">
             <!-- Description will be inserted here -->
-        </div>
-        <h3>ลักษณะของคุณ</h3>
-        <div class="trait-container">
-            <div class="trait">
-                <div class="trait-label">เก็บตัว</div>
-                <div class="trait-bar-container">
-                    <div class="trait-bar" id="i-bar" style="width: 70%"></div>
-                </div>
-                <div class="trait-label">เปิดเผย</div>
-            </div>
-            <div class="trait">
-                <div class="trait-label">จินตนาการ</div>
-                <div class="trait-bar-container">
-                    <div class="trait-bar" id="n-bar" style="width: 85%"></div>
-                </div>
-                <div class="trait-label">รูปธรรม</div>
-            </div>
-            <div class="trait">
-                <div class="trait-label">เหตุผล</div>
-                <div class="trait-bar-container">
-                    <div class="trait-bar" id="t-bar" style="width: 65%"></div>
-                </div>
-                <div class="trait-label">ความรู้สึก</div>
-            </div>
-            <div class="trait">
-                <div class="trait-label">มีแบบแผน</div>
-                <div class="trait-bar-container">
-                    <div class="trait-bar" id="j-bar" style="width: 55%"></div>
-                </div>
-                <div class="trait-label">ยืดหยุ่น</div>
-            </div>
         </div>
         <button id="restart-btn">ทำแบบทดสอบอีกครั้ง</button>
     </div>
@@ -607,7 +758,7 @@
                 "เรียนรู้และลองทำสิ่งใหม่ๆที่ท้าทาย",
                 "ทำสิ่งที่คุ้นเคยและถนัดอยู่แล้ว"
             ],
-            imgSrc: "img/img (1).jpg"
+            imgSrc: "img/img (1).png"
         },
         {
             text: "ฉันชอบที่จะ",
@@ -615,7 +766,7 @@
                 "อยู่คนเดียวเงียบๆในห้องส่วนตัว",
                 "ออกไปเจอเพื่อนๆและสังสรรค์"
             ],
-            imgSrc: "img/img (2).jpg"
+            imgSrc: "img/img (2).png"
         },
         {
             text: "ฉันชอบที่จะ",
@@ -623,7 +774,7 @@
                 "ให้คนอื่นใช้เหตุผลและความจริงในการคุยกับฉัน",
                 "ให้คนอื่นใส่ใจความรู้สึกของฉันเป็นหลัก"
             ],
-            imgSrc: "img/img (3).jpg"
+            imgSrc: "img/img (3).png"
         },
         {
             text: "ฉันชอบที่จะ",
@@ -631,7 +782,7 @@
                 "ทำงานหรือกิจกรรมให้เสร็จทีละอย่าง",
                 "ทำหลายๆอย่างพร้อมกันและสลับไปมา"
             ],
-            imgSrc: "img/img (4).jpg"
+            imgSrc: "img/img (4).png"
         },
         {
             text: "ฉันชอบที่จะ",
@@ -639,7 +790,7 @@
                 "ตัดสินใจโดยใช้ข้อมูลและความเป็นเหตุเป็นผล",
                 "ตัดสินใจโดยใช้ความรู้สึกและสัญชาตญาณ"
             ],
-            imgSrc: "img/img (5).jpg"
+            imgSrc: "img/img (5).png"
         },
         {
             text: "ฉันชอบที่จะ",
@@ -647,7 +798,7 @@
                 "เจาะลึกในเรื่องที่สนใจจริงๆเพียงไม่กี่เรื่อง",
                 "รู้เรื่องหลากหลายแต่ไม่ต้องลงลึกมาก"
             ],
-            imgSrc: "img/img (6).jpg"
+            imgSrc: "img/img (6).png"
         },
         {
             text: "ฉันชอบที่จะ",
@@ -655,7 +806,7 @@
                 "มีตารางกิจกรรมที่วางแผนไว้ชัดเจน",
                 "ปล่อยให้วันเป็นไปตามสถานการณ์โดยไม่ต้องวางแผนมาก"
             ],
-            imgSrc: "img/img (7).jpg"
+            imgSrc: "img/img (7).png"
         },
         {
             text: "ฉันชอบที่จะ",
@@ -663,7 +814,7 @@
                 "ทำงานหรือกิจกรรมที่เริ่มไว้จนเสร็จสมบูรณ์",
                 "เริ่มต้นไอเดียหรือโปรเจคใหม่ๆที่น่าสนใจ"
             ],
-            imgSrc: "img/img (8).jpg"
+            imgSrc: "img/img (8).png"
         },
         {
             text: "ฉันชอบที่จะ",
@@ -671,7 +822,7 @@
                 "ให้ทุกอย่างเป็นไปตามแผนที่วางไว้ไม่มีการเปลี่ยนแปลง",
                 "เปลี่ยนแปลงแผนตามสถานการณ์และโอกาส"
             ],
-            imgSrc: "img/img (9).jpg"
+            imgSrc: "img/img (9).png"
         },
         {
             text: "ฉันชอบที่จะ",
@@ -679,7 +830,7 @@
                 "ฟังคนอธิบายเรื่องราวเป็นภาพรวมและแนวคิดหลัก",
                 "ฟังคนอธิบายเรื่องราวอย่างละเอียดเป็นขั้นตอน"
             ],
-            imgSrc: "img/img (10).jpg"
+            imgSrc: "img/img (10).png"
         },
         {
             text: "ฉันชอบที่จะ",
@@ -687,7 +838,7 @@
                 "อยู่ในที่เงียบสงบไม่มีเสียงรบกวน",
                 "อยู่ในที่ที่มีเสียงพูดคุยหรือดนตรีเบาๆเป็นพื้นหลัง"
             ],
-            imgSrc: "img/img (11).jpg"
+            imgSrc: "img/img (11).png"
         },
         {
             text: "ฉันชอบที่จะ",
@@ -695,7 +846,7 @@
                 "วิเคราะห์ปัญหาและหาทางแก้ไข",
                 "ช่วยเหลือและเข้าใจความรู้สึกของเพื่อน"
             ],
-            imgSrc: "img/img (12).jpg"
+            imgSrc: "img/img (12).png"
         },
         {
             text: "ฉันชอบที่จะ",
@@ -703,7 +854,7 @@
                 "ฟังเรื่องราวเกี่ยวกับวิธีการและขั้นตอนที่ทำให้สิ่งนั้นสำเร็จ",
                 "ฟังเรื่องราวเกี่ยวกับแรงบันดาลใจและความคิดสร้างสรรค์"
             ],
-            imgSrc: "img/img (13).jpg"
+            imgSrc: "img/img (13).png"
         },
         {
             text: "ฉันชอบที่จะ",
@@ -711,7 +862,7 @@
                 "รับฟังข้อเสียของฉันอย่างตรงไปตรงมา",
                 "รับฟังข้อเสียของฉันแบบอ้อมๆ"
             ],
-            imgSrc: "img/img (14).jpg"
+            imgSrc: "img/img (14).png"
         },
         {
             text: "ฉันชอบที่จะ",
@@ -719,7 +870,7 @@
                 "ลงมือทำอะไรทันทีโดยไม่ต้องคิดนาน",
                 "วางแผนอย่างละเอียดก่อนลงมือทำ"
             ],
-            imgSrc: "img/img (15).jpg"
+            imgSrc: "img/img (15).png"
         },
         {
             text: "ฉันชอบที่จะ",
@@ -727,7 +878,7 @@
                 "จดจ่อกับสิ่งที่เกิดขึ้นในปัจจุบัน",
                 "คิดเกี่ยวกับอนาคตและความเป็นไปได้ต่างๆ"
             ],
-            imgSrc: "img/img (1).jpg"
+            imgSrc: "img/img (1).png"
         },
         {
             text: "ฉันชอบที่จะ",
@@ -735,7 +886,7 @@
                 "รับของขวัญแบบเซอร์ไพรส์ที่ไม่รู้มาก่อน",
                 "เลือกของขวัญที่ชอบด้วยตัวเอง"
             ],
-            imgSrc: "img/img (2).jpg"
+            imgSrc: "img/img (2).png"
         },
         {
             text: "ฉันชอบที่จะ",
@@ -743,7 +894,7 @@
                 "มีเวลาคิดให้นานๆก่อนจะต้องตัดสินใจอะไร",
                 "ตัดสินใจทันทีโดยใช้ข้อมูลที่มีอยู่"
             ],
-            imgSrc: "img/img (3).jpg"
+            imgSrc: "img/img (3).png"
         },
         {
             text: "ฉันชอบที่จะ",
@@ -751,7 +902,7 @@
                 "แสดงความคิดเห็นอย่างตรงไปตรงมาในกลุ่มเพื่อน",
                 "คิดทบทวนให้ดีก่อนแสดงความคิดเห็นในกลุ่ม"
             ],
-            imgSrc: "img/img (4).jpg"
+            imgSrc: "img/img (4).png"
         },
         {
             text: "ฉันชอบที่จะ",
@@ -759,7 +910,7 @@
                 "คุยกันตรงๆเพื่อแก้ไขปัญหาความขัดแย้ง",
                 "หลีกเลี่ยงความขัดแย้งเพื่อรักษาความสงบ"
             ],
-            imgSrc: "img/img (5).jpg"
+            imgSrc: "img/img (5).png"
         }
     ];
 
@@ -790,7 +941,7 @@
             description: "ช่วยเหลือ สร้างแรงบันดาลใจ"
         },
         "ENTJ": {
-            title: "HACIPUPU",  // Note: ENTJ appears to be missing description in the text
+            title: "HACIPUPU",
             description: "ผู้นำ มีวิสัยทัศน์"
         },
         "ESTP": {
@@ -864,15 +1015,12 @@
     const prevBtn = document.getElementById('prev-btn');
     const nextBtn = document.getElementById('next-btn');
     const testSection = document.getElementById('test-section');
+    const backgroundContainer = document.getElementById('background-container');
     const resultSection = document.getElementById('result-section');
     const personalityTypeElement = document.getElementById('personality-type');
     const personalityTitleElement = document.getElementById('personality-title');
     const typeDescriptionElement = document.getElementById('type-description');
     const restartBtn = document.getElementById('restart-btn');
-    const iBar = document.getElementById('i-bar');
-    const nBar = document.getElementById('n-bar');
-    const tBar = document.getElementById('t-bar');
-    const jBar = document.getElementById('j-bar');
 
     let currentQuestionIndex = 0;
     // Array to store answers:  null (unanswered), 0 (left clicked), 1 (right clicked)
@@ -883,19 +1031,6 @@
             const qDiv = document.createElement('div');
             qDiv.className = 'question' + (index === 0 ? ' active' : '');
             qDiv.dataset.index = index;
-
-            // Create image container
-            const imgContainer = document.createElement('div');
-            imgContainer.className = 'image-container';
-
-            // Insert the image
-            const questionImg = document.createElement('img');
-            questionImg.src = question.imgSrc;
-            questionImg.alt = `Question ${index + 1}`;
-            questionImg.className = 'question-image';
-
-            imgContainer.appendChild(questionImg);
-            qDiv.appendChild(imgContainer);
 
             // Centered question text
             const qText = document.createElement('div');
@@ -937,6 +1072,15 @@
 
         updateNavButtons();
         updateProgress();
+        // Set initial background image
+        updateBackgroundImage();
+    }
+
+    function updateBackgroundImage() {
+        const currentQuestion = questions[currentQuestionIndex];
+        if (currentQuestion && currentQuestion.imgSrc) {
+            backgroundContainer.style.backgroundImage = `url('${currentQuestion.imgSrc}')`;
+        }
     }
 
     function goToQuestion(index) {
@@ -945,6 +1089,7 @@
         currentQuestionIndex = index;
         updateNavButtons();
         updateProgress();
+        updateBackgroundImage(); // Update background when question changes
     }
 
     function goToNextQuestion() {
@@ -961,6 +1106,7 @@
         } else {
             // If we're at the first question, go back to landing page
             testSection.style.display = 'none';
+            container.style.display = 'flex'; // Show main container
             landingPage.style.display = 'flex';
         }
     }
@@ -1041,7 +1187,6 @@
 
     function showResults() {
         const results = calculateResults();
-        // Hide the personality type code as requested
         personalityTypeElement.textContent = results.type;
         personalityTypeElement.style.display = "none";
 
@@ -1052,27 +1197,16 @@
 
         // Update the personality type image
         const personalityImage = document.getElementById('personality-image');
-        personalityImage.src = `img/result/${results.type.toLowerCase()}.jpg`;
+        personalityImage.src = `img/result/${results.type.toLowerCase()}.png`;
         personalityImage.alt = `${typeData.title}`;
 
-        // Modify the image styling to show original dimensions
-        personalityImage.style.objectFit = "contain";
-        personalityImage.style.width = "auto";
-        personalityImage.style.height = "auto";
-        personalityImage.style.maxWidth = "100%";
-
+        // The image will now be full screen due to the updated CSS
         personalityTitleElement.textContent = typeData.title;
         typeDescriptionElement.textContent = typeData.description;
 
-        // Update trait bars
-        iBar.style.width = `${results.iPercent}%`;
-        nBar.style.width = `${results.nPercent}%`;
-        tBar.style.width = `${results.tPercent}%`;
-        jBar.style.width = `${results.jPercent}%`;
-
+        // Show the result section immediately without animations
         testSection.style.display = 'none';
         resultSection.style.display = 'block';
-        // Keep header visible on results page
     }
 
     function restartTest() {
@@ -1080,7 +1214,8 @@
         const radioInputs = document.querySelectorAll('input[type="radio"]');
         radioInputs.forEach(r => (r.checked = false));
 
-        // Return to landing page and header stays visible
+        // Return to landing page and show main container
+        container.style.display = 'flex';
         landingPage.style.display = 'flex';
 
         goToQuestion(0);
@@ -1091,7 +1226,9 @@
     // Landing page button listener
     startButton.addEventListener('click', () => {
         landingPage.style.display = 'none';
+        container.style.display = 'none'; // Hide main container
         testSection.style.display = 'flex';
+        updateBackgroundImage(); // Set background when starting test
     });
 
     prevBtn.addEventListener('click', goToPrevQuestion);
@@ -1099,4 +1236,8 @@
     restartBtn.addEventListener('click', restartTest);
 
     initTest();
+
 </script>
+</body>
+
+</html>
